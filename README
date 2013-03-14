@@ -1,0 +1,7 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4475
+
+Opens a browser window with the word under the cursor or with the visually selected text.
+Just type `gs` in normal or visual mode
+Supported browsers: Chromium, Chrome, Firefox, links
+
+https://github.com/g3orge/vim-voogle
