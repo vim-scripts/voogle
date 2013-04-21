@@ -1,6 +1,6 @@
 " voogle.vim - Google from vim
 " Original Author : George Papanikolaou <papanikge@ceid.upatras.gr>
-" Version         : 1.1
+" Version         : 1.2
 " Use pathogen to install or in plugin/voogle.vim
 
 if exists('g:loaded_voogle') || v:version < 700
@@ -22,7 +22,9 @@ func! Google(mode)
 
     " Find a browser
     if !exists("browser")
-        if executable("chromium")
+        if has("mac")
+            let browser = "!open "
+        elseif executable("chromium")
             let browser = "!chromium "
         elseif executable("chrome")
             let browser = "!chrome "
@@ -43,8 +45,14 @@ func! Google(mode)
         let query = substitute(@x, "\n", "", "g")
     endif
 
-    " Run the command in a new process and silence its output
-    exec browser . "\"" . g:search_engine . query . "\" > /dev/null 2>&1 &"
+    " Prepare the shell command
+    if has("unix") || has("macunix")
+        let shell_command = browser . "\"" . g:search_engine . query . "\" > /dev/null 2>&1 &"
+    else
+        let shell_command = browser . "\"" . g:search_engine . query . "\""
+    endif
+
+    execute shell_command
     redraw!
 endfunc
 
